@@ -8,15 +8,76 @@ local scene = composer.newScene()
 -- the scene is removed entirely (not recycled) via "composer.removeScene()"
 -- -----------------------------------------------------------------------------------
 
-local function gotoGame()
-     composer.gotoScene( "game" )
+local physics = require( "physics" )
+physics.start()
+physics.setGravity( 0, 0 )
+
+-- Configure image sheet
+local sheetOptions =
+{
+    frames =
+		{
+		   {    -- 1) asteroid 1
+		        x = 0,
+					  y = 0,
+					  width = 102,
+					  height = 85
+		   },
+		   {        -- 2) asteroid 2
+	           x = 0,
+					   y = 85,
+					   width = 90,
+					   height = 83
+	     },
+		   {        -- 3) asteroid 3
+	           x = 0,
+					   y = 168,
+					   width = 100,
+					   height = 97
+		   },
+	     {        -- 4) ship
+	           x = 0,
+					   y = 265,
+					   width = 98,
+					   height = 79
+		   },
+	     {        -- 5) laser
+	           x = 98,
+					   y = 265,
+					   width = 14,
+					   height = 40
+		   },
+	  }
+}
+local objectSheet = graphics.newImageSheet( "gameObjects.png", sheetOptions )
+
+--  Initialize variabales
+local lives = 3
+local lives = 0
+local died  = false
+
+local asteroidsTable = {}
+
+local ship
+local gameLoopTimer
+local livesText
+local scoreText
+
+local backGroup
+local mainGroup
+local uiGroup
+
+
+local function updateText()
+		livestext.text = "Lives: " .. lives
+		scoreText.text = "Score: " .. score
 end
 
-local function gotoHighScores()
-	   composer.gotoScene ( "highscores" )
-end
 
+local function createAsteroid()
 
+		local newAsteroid = display.newImageRect( maingGroup, objectSheet, 1, 102, 85 )
+		table.insert( asteroidsTable, newAsteroid )
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
@@ -27,22 +88,6 @@ function scene:create( event )
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
 
-  local background = display.newImageRect( sceneGroup, "background.png", 800, 1400 )
-	background.x = display.contentCenterX
-	background.y = display.contentCenterY
-
-	local title = display.newImageRect( sceneGroup, "title.png", 500, 80)
-	title.x = display.contentCenterX
-	title.y = 200
-
-	local playButton = display.newText( sceneGroup, "Game Start!", display.contentCenterX, 700, native.systemFont, 44 )
-	playButton:setFillColor( 0.82, 0.83, 1 )
-
-	local highScoresButton = display.newText( sceneGroup, "Some Horible Scores", display.contentCenterX, 810, native.systemFont, 44 )
-	highScoresButton:setFillColor( 0.75, 0.78, 1 )
-
-	playButton:addEventListener( "tap", gotoGame )
-	highScoresButton:addEventListener( "tap", gotoHighScores )
 end
 
 
