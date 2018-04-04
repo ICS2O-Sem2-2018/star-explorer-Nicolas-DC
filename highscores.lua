@@ -8,15 +8,37 @@ local scene = composer.newScene()
 -- the scene is removed entirely (not recycled) via "composer.removeScene()"
 -- -----------------------------------------------------------------------------------
 
-local function gotoGame()
-     composer.gotoScene( "game", { time=800, effect="crossFade" } )
+--initialize variables
+local json = require( "json" )
+
+local scoresTable = {}
+
+local filePath = system.pathForFile( "scores.json", system.DocumentsDirectory )
+
+
+local function loadScores()
+
+	  local file = io.open( filePath, "r" )
+
+		if file then
+			   local contents = file:read( "*a" )
+				 io.close( file )
+				 scoresTable = json.decode( contents )
+		end
+
+		if ( scoresTable == nil or #scoresTable == 0 ) then
+			 scoresTable = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+		end
 end
 
-local function gotoHighScores()
-	   composer.gotoScene ( "highscores", {time=800, effect="crossFade"} )
-end
 
+local function saveScores()
 
+	  for i = #scoresTable, 11, -1 do
+			  table.remove( scoresTable, i )
+		end
+
+		local file = io.open( filePath, "w" )
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
@@ -27,22 +49,6 @@ function scene:create( event )
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
 
-  local background = display.newImageRect( sceneGroup, "background.png", 800, 1400 )
-	background.x = display.contentCenterX
-	background.y = display.contentCenterY
-
-	local title = display.newImageRect( sceneGroup, "title.png", 500, 80)
-	title.x = display.contentCenterX
-	title.y = 200
-
-	local playButton = display.newText( sceneGroup, "Game Start!", display.contentCenterX, 700, native.systemFont, 44 )
-	playButton:setFillColor( 0.82, 0.83, 1 )
-
-	local highScoresButton = display.newText( sceneGroup, "Some Horrible Scores", display.contentCenterX, 810, native.systemFont, 44 )
-	highScoresButton:setFillColor( 0.75, 0.78, 1 )
-
-	playButton:addEventListener( "tap", gotoGame )
-	highScoresButton:addEventListener( "tap", gotoHighScores )
 end
 
 
