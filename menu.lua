@@ -27,15 +27,19 @@ function scene:create( event )
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
 
-  local background = display.newImageRect( sceneGroup, "background.png", 800, 1400 )
+  local background = display.newImageRect( sceneGroup, "rainbowBackground.jpg", 800, 1400 )
 	background.x = display.contentCenterX
 	background.y = display.contentCenterY
+
+  local TARDIS = display.newImageRect( sceneGroup, "TARDIS.png", 700, 900 )
+  TARDIS.x = display.contentCenterX
+  TARDIS.y = display.contentCenterY
 
 	local title = display.newImageRect( sceneGroup, "title.png", 500, 80)
 	title.x = display.contentCenterX
 	title.y = 200
 
-	local playButton = display.newText( sceneGroup, "Game Start!", display.contentCenterX, 700, native.systemFont, 44 )
+	local playButton = display.newText( sceneGroup, "Magical Start!", display.contentCenterX, 700, native.systemFont, 44 )
 	playButton:setFillColor( 0.82, 0.83, 1 )
 
 	local highScoresButton = display.newText( sceneGroup, "Some Horrible Scores", display.contentCenterX, 810, native.systemFont, 44 )

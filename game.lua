@@ -117,8 +117,8 @@ local function fireLaser()
   newLaser.isBullet = true
   newLaser.myName = "laser"
 
-  newLaser.x = ship.x
-  newLaser.y = ship.y
+  newLaser.x = ship.x +(ship.width/3)
+  newLaser.y = ship.y +(ship.height/20)
   newLaser:toBack()
 
   transition.to( newLaser, { y=40, time=500,
@@ -271,11 +271,11 @@ function scene:create( event )
   sceneGroup:insert( uiGroup )    -- Insert into the scene's veiw group
 
   -- Load the background
-  local background = display.newImageRect( backGroup, "background.png", 800, 1400 )
-  background.x = display.contentCenterX
-  background.y = display.contentCenterY
+  local Japancityscape = display.newImageRect( backGroup, "Japancityscape.jpg", 800, 1400 )
+  Japancityscape.x = display.contentCenterX
+  Japancityscape.y = display.contentCenterY
 
-  ship = display.newImageRect( mainGroup, objectSheet, 4, 98, 79 )
+  ship = display.newImageRect( mainGroup, "littleMagical.png", 150, 200 )
   ship.x = display.contentCenterX
   ship.y = display.contentHeight - 100
   physics.addBody( ship, { radius=30, isSensor=true } )
@@ -344,7 +344,7 @@ function scene:destroy( event )
   -- Dispose audio!
   audio.dispose( explosionSound )
   audio.dispose( fireSound )
-  audio.dispose( musicTrack ) 
+  audio.dispose( musicTrack )
 end
 
 
