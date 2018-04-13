@@ -71,6 +71,11 @@ local explosionSound
 local fireSound
 local musicTrack
 
+local pauseButton
+local resumeButton
+local restartButton
+local exitButton
+
 local function updateText()
   livesText.text = "Lives: " .. lives
   scoreText.text = "Score: " .. score
@@ -187,6 +192,10 @@ local function restoreShip()
 } )
 end
 
+ local function pauseGame()
+      physics.pause()
+      display.newText( sceneGroup, "Resume", display.contentCenterX, 700, native.systemFont, 44 )
+    end
 
 local function endGame()
      composer.setVariable( "finalScore", score )
@@ -248,6 +257,7 @@ end
 end
 
 
+
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
@@ -269,6 +279,14 @@ function scene:create( event )
 
   uiGroup = display.newGroup()    -- Display group for UI object like the score
   sceneGroup:insert( uiGroup )    -- Insert into the scene's veiw group
+
+  -- Pause button
+   local pauseButton = display.newImageRect( mainGroup, "pause.png", 75, 75 )
+   pauseButton.x = 625
+   pauseButton.y = 50
+   pauseButton.myName = "pause"
+
+   pauseButton:addEventListener( "tap", pauseGame )
 
   -- Load the background
   local Japancityscape = display.newImageRect( backGroup, "Japancityscape.jpg", 800, 1400 )
