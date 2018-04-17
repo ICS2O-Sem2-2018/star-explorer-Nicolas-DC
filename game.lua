@@ -194,8 +194,13 @@ end
 
  local function pauseGame()
       physics.pause()
-      display.newText( sceneGroup, "Resume", display.contentCenterX, 700, native.systemFont, 44 )
+    local resumeButton = display.newText( uiGroup, "Resume", display.contentCenterX, 400, native.systemFont, 44 )
+    resumeButton:setFillColor(  0.82, 0.83, 1 )
     end
+
+ local function resumeGame()
+      physics.start()
+  end
 
 local function endGame()
      composer.setVariable( "finalScore", score )
@@ -287,6 +292,7 @@ function scene:create( event )
    pauseButton.myName = "pause"
 
    pauseButton:addEventListener( "tap", pauseGame )
+   resumeButton:addEventListener( "tap", resumeGame )
 
   -- Load the background
   local Japancityscape = display.newImageRect( backGroup, "Japancityscape.jpg", 800, 1400 )
